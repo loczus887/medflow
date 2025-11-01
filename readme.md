@@ -27,6 +27,35 @@ Aplikacja wykorzystuje architekturę MVC z wyraźnym podziałem na warstwy:
 
 ## Baza danych
 
+# Baza Danych MedFlow
+
+## Struktura
+
+### Relacje między tabelami:
+
+1. **users (1) ↔ (1) patients** - jeden użytkownik może być jednym pacjentem
+2. **users (1) ↔ (1) doctors** - jeden użytkownik może być jednym lekarzem
+3. **roles (1) ↔ (N) users** - jedna rola może mieć wielu użytkowników
+4. **doctors (N) ↔ (M) specializations** - wielu lekarzy może mieć wiele specjalizacji
+5. **patients (1) ↔ (N) appointments** - jeden pacjent może mieć wiele wizyt
+6. **doctors (1) ↔ (N) appointments** - jeden lekarz może mieć wiele wizyt
+7. **appointments (1) ↔ (1) medical_records** - jedna wizyta ma jedną dokumentację
+
+## Typy relacji:
+- **1:1** - users ↔ patients, users ↔ doctors, appointments ↔ medical_records
+- **1:N** - roles ↔ users, patients ↔ appointments, doctors ↔ appointments
+- **N:M** - doctors ↔ specializations (przez doctor_specializations)
+
+## Konta testowe:
+
+| Email | Hasło | Rola |
+|-------|-------|------|
+| admin@medflow.com | haslo123 | Admin |
+| jan.kowalski@medflow.com | haslo123 | Lekarz |
+| anna.nowak@medflow.com | haslo123 | Lekarz |
+| recepcja@medflow.com | haslo123 | Recepcja |
+| pacjent1@example.com | haslo123 | Pacjent |
+
 ### Diagram ERD
 (Diagram zostanie dodany)
 
