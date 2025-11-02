@@ -17,6 +17,14 @@ class Routing {
         'logout' => [
             'controller' => 'SecurityController',
             'action' => 'logout'
+        ],
+        'dashboard' => [
+            'controller' => 'DashboardController',
+            'action' => 'index'
+        ],
+        'patient-dashboard' => [
+            'controller' => 'DashboardController',
+            'action' => 'patientIndex'
         ]
     ];
 
@@ -29,6 +37,8 @@ class Routing {
         if (array_key_exists($path, self::$routes)) {
             $controller = self::$routes[$path]['controller'];
             $action = self::$routes[$path]['action'];
+
+            require_once "src/controllers/$controller.php";
 
             $controllerObj = new $controller;
             $controllerObj->$action();

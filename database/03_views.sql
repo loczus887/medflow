@@ -128,6 +128,7 @@ COMMENT ON VIEW v_doctor_statistics IS 'Statistics for each doctor';
 
 -- View 5: Available appointment slots
 -- Shows free slots for booking
+-- View 5: Available appointment slots
 CREATE OR REPLACE VIEW v_available_slots AS
 SELECT 
     d.id AS doctor_id,
@@ -135,23 +136,23 @@ SELECT
     d.last_name AS doctor_last_name,
     d.title,
     s.name AS specialization,
-    CURRENT_DATE + INTERVAL '1 day' * gs.day AS available_date,
-    (TIME '08:00:00' + INTERVAL '30 minutes' * gs.slot) AS available_time,
+    CURRENT_DATE + INTERVAL '1 day' * days.day AS available_date,
+    (TIME '08:00:00' + INTERVAL '30 minutes' * slots.slot) AS available_time,
     CONCAT(d.title, ' ', d.first_name, ' ', d.last_name) AS doctor_name
 FROM doctors d
-CROSS JOIN generate_series(0, 6) AS gs(day)
-CROSS JOIN generate_series(0, 15) AS gs(slot)
+CROSS JOIN generate_series(0, 6) AS days(day)
+CROSS JOIN generate_series(0, 15) AS slots(slot)
 LEFT JOIN doctor_specializations ds ON d.id = ds.doctor_id
 LEFT JOIN specializations s ON ds.specialization_id = s.id
 WHERE NOT EXISTS (
     SELECT 1 
     FROM appointments a 
     WHERE a.doctor_id = d.id 
-    AND a.appointment_date = CURRENT_DATE + INTERVAL '1 day' * gs.day
-    AND a.appointment_time = (TIME '08:00:00' + INTERVAL '30 minutes' * gs.slot)
+    AND a.appointment_date = CURRENT_DATE + INTERVAL '1 day' * days.day
+    AND a.appointment_time = (TIME '08:00:00' + INTERVAL '30 minutes' * slots.slot)
     AND a.status NOT IN ('cancelled')
 )
-AND (TIME '08:00:00' + INTERVAL '30 minutes' * gs.slot) < TIME '16:00:00'
+AND (TIME '08:00:00' + INTERVAL '30 minutes' * slots.slot) < TIME '16:00:00'
 ORDER BY available_date, available_time;
 
 COMMENT ON VIEW v_available_slots IS 'Available appointment slots for next 7 days';

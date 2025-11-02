@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestracja - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/login.css">
+</head>
+<body>
+    <form action="/register" method="POST">
+        <div class="logo">
+            <h1>MedFlow</h1>
+            <p>System Zarządzania Przychodnią</p>
+        </div>
+
+        <h2>Rejestracja pacjenta</h2>
+
+        <?php if(isset($message)): ?>
+            <div class="message">
+                <?= htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+        
+        <input name="firstname" type="text" placeholder="Imię" required>
+        <input name="lastname" type="text" placeholder="Nazwisko" required>
+        <input name="email" type="email" placeholder="Email" required>
+        <input name="password1" type="password" placeholder="Hasło" required>
+        <input name="password2" type="password" placeholder="Powtórz hasło" required>
+
+        <button type="submit">Zarejestruj się</button>
+
+        <div class="register-link">
+            <p>Masz już konto? <a href="/login">Zaloguj się</a></p>
+        </div>
+    </form>
+</body>
+</html>

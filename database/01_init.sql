@@ -108,7 +108,10 @@ CREATE TABLE appointments (
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT future_appointment CHECK (appointment_date >= CURRENT_DATE),
+    CONSTRAINT future_appointment CHECK (
+        appointment_date >= CURRENT_DATE 
+        OR status IN ('completed', 'cancelled', 'no_show')
+    ),
     CONSTRAINT valid_duration CHECK (duration > 0 AND duration <= 240),
     CONSTRAINT unique_doctor_slot UNIQUE (doctor_id, appointment_date, appointment_time)
 );
