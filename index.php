@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+require_once 'src/services/SessionManager.php';
+
+SessionManager::start();
 
 require_once 'Routing.php';
 

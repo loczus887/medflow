@@ -1,6 +1,15 @@
 <?php
 
+require_once __DIR__ . '/../services/AuthService.php';
+require_once __DIR__ . '/../services/SessionManager.php';
+
 class AppController {
+
+    protected AuthService $authService;
+
+    public function __construct() {
+        $this->authService = new AuthService();
+    }
 
     protected function isGet(): bool {
         return $_SERVER["REQUEST_METHOD"] === 'GET';
@@ -36,25 +45,41 @@ class AppController {
     }
 
     protected function isLoggedIn(): bool {
-        return isset($_SESSION['user_id']);
+        return $this->authService->isLoggedIn();
     }
 
     protected function requireLogin() {
-        if (!$this->isLoggedIn()) {
-            $this->redirect('login');
-        }
+        $this->authService->requireLogin();
     }
 
     protected function getUserRole(): ?string {
-        return $_SESSION['user_role'] ?? null;
+        return $this->authService->getCurrentUserRole();
     }
 
     protected function requireRole(string $role) {
-        $this->requireLogin();
-        
-        if ($this->getUserRole() !== $role) {
-            http_response_code(403);
-            die('Access denied');
-        }
+        $this->authService->requireRole($role);
+    }
+
+    protected function requireAnyRole(array $roles) {
+        $this->authService->requireAnyRole($roles);
+    }
+
+    protected function getCurrentUserId(): ?int {
+        return $this->authService->getCurrentUserId();
+    }
+
+    protected function setFlash(string $key, $value): void {
+        SessionManager::setFlash($key, $value);
+    }
+
+    protected function getFlash(string $key, $default = null) {
+        return SessionManager::getFlash($key, $default);
+    }
+
+    protected function jsonResponse(array $data, int $statusCode = 200): void {
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit();
     }
 }
