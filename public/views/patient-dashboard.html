@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pacjenta - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>MedFlow</h1>
+        </div>
+        <div class="navbar-menu">
+            <span>Witaj, <?= htmlspecialchars($patient['first_name']); ?>!</span>
+            <a href="/logout" class="btn-logout">Wyloguj się</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Mój Panel</h2>
+            <a href="/book-appointment" class="btn-primary">Umów wizytę</a>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Nadchodzące wizyty</h3>
+                <div class="stat-number"><?= count($upcomingAppointments); ?></div>
+            </div>
+            <div class="card">
+                <h3>Historia wizyt</h3>
+                <div class="stat-number"><?= count($pastAppointments); ?></div>
+            </div>
+        </div>
+
+        <div class="appointments-section">
+            <h3>Najbliższe wizyty</h3>
+            <?php if (empty($upcomingAppointments)): ?>
+                <p class="no-data">Brak zaplanowanych wizyt</p>
+            <?php else: ?>
+                <div class="appointments-list">
+                    <?php foreach (array_slice($upcomingAppointments, 0, 5) as $appointment): ?>
+                        <div class="appointment-card">
+                            <div class="appointment-date">
+                                <span class="date"><?= date('d.m.Y', strtotime($appointment['appointment_date'])); ?></span>
+                                <span class="time"><?= date('H:i', strtotime($appointment['appointment_time'])); ?></span>
+                            </div>
+                            <div class="appointment-details">
+                                <h4><?= htmlspecialchars($appointment['doctor_title'] . ' ' . $appointment['doctor_first_name'] . ' ' . $appointment['doctor_last_name']); ?></h4>
+                                <p><?= htmlspecialchars($appointment['specialization'] ?? 'Wizyta'); ?></p>
+                                <?php if ($appointment['reason']): ?>
+                                    <p class="reason"><?= htmlspecialchars($appointment['reason']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                            <div class="appointment-status">
+                                <span class="badge status-<?= $appointment['status']; ?>">
+                                    <?= $appointment['status'] === 'scheduled' ? 'Zaplanowana' : 'Potwierdzona'; ?>
+                                </span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="appointments-section">
+            <h3>Historia wizyt</h3>
+            <?php if (empty($pastAppointments)): ?>
+                <p class="no-data">Brak historii wizyt</p>
+            <?php else: ?>
+                <div class="appointments-list">
+                    <?php foreach (array_slice($pastAppointments, 0, 5) as $appointment): ?>
+                        <div class="appointment-card past">
+                            <div class="appointment-date">
+                                <span class="date"><?= date('d.m.Y', strtotime($appointment['appointment_date'])); ?></span>
+                                <span class="time"><?= date('H:i', strtotime($appointment['appointment_time'])); ?></span>
+                            </div>
+                            <div class="appointment-details">
+                                <h4><?= htmlspecialchars($appointment['doctor_title'] . ' ' . $appointment['doctor_first_name'] . ' ' . $appointment['doctor_last_name']); ?></h4>
+                                <p><?= htmlspecialchars($appointment['reason'] ?? 'Wizyta'); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>

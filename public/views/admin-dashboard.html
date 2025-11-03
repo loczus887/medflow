@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administratora - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>MedFlow</h1>
+        </div>
+        <div class="navbar-menu">
+            <span>Administrator</span>
+            <a href="/logout" class="btn-logout">Wyloguj się</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Panel Administratora</h2>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Lekarze</h3>
+                <div class="stat-number"><?= $stats['total_doctors']; ?></div>
+            </div>
+            <div class="card">
+                <h3>Pacjenci</h3>
+                <div class="stat-number"><?= $stats['total_patients']; ?></div>
+            </div>
+            <div class="card">
+                <h3>Wizyty dzisiaj</h3>
+                <div class="stat-number"><?= $stats['appointments_today']; ?></div>
+            </div>
+        </div>
+
+        <div class="appointments-section">
+            <h3>Funkcje administratora (w przygotowaniu)</h3>
+            <p class="no-data">Panel administratora jest w trakcie implementacji</p>
+        </div>
+    </div>
+</body>
+</html>

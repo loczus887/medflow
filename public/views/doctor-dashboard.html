@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Lekarza - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>MedFlow</h1>
+        </div>
+        <div class="navbar-menu">
+            <span>Dr <?= htmlspecialchars($doctor['first_name'] . ' ' . $doctor['last_name']); ?></span>
+            <a href="/logout" class="btn-logout">Wyloguj się</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Panel Lekarza</h2>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Wizyty dzisiaj</h3>
+                <div class="stat-number"><?= count($todayAppointments); ?></div>
+            </div>
+            <div class="card">
+                <h3>Nadchodzące</h3>
+                <div class="stat-number"><?= $stats['upcoming_appointments'] ?? 0; ?></div>
+            </div>
+            <div class="card">
+                <h3>Zakończone</h3>
+                <div class="stat-number"><?= $stats['completed_appointments'] ?? 0; ?></div>
+            </div>
+        </div>
+
+        <div class="appointments-section">
+            <h3>Dzisiejsze wizyty</h3>
+            <?php if (empty($todayAppointments)): ?>
+                <p class="no-data">Brak wizyt na dzisiaj</p>
+            <?php else: ?>
+                <div class="appointments-list">
+                    <?php foreach ($todayAppointments as $appointment): ?>
+                        <div class="appointment-card">
+                            <div class="appointment-date">
+                                <span class="time"><?= date('H:i', strtotime($appointment['appointment_time'])); ?></span>
+                            </div>
+                            <div class="appointment-details">
+                                <h4><?= htmlspecialchars($appointment['patient_first_name'] . ' ' . $appointment['patient_last_name']); ?></h4>
+                                <p>PESEL: <?= htmlspecialchars($appointment['patient_pesel']); ?></p>
+                                <?php if ($appointment['reason']): ?>
+                                    <p class="reason"><?= htmlspecialchars($appointment['reason']); ?></p>
+                                <?php endif; ?>
+                            </div>
+                            <div class="appointment-status">
+                                <span class="badge status-<?= $appointment['status']; ?>">
+                                    <?= $appointment['status']; ?>
+                                </span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>
