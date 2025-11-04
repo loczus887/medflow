@@ -25,6 +25,42 @@ class Routing {
         'patient-dashboard' => [
             'controller' => 'DashboardController',
             'action' => 'patientIndex'
+        ],
+        'book-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'bookAppointment'
+        ],
+        'my-appointments' => [
+            'controller' => 'AppointmentController',
+            'action' => 'myAppointments'
+        ],
+        'cancel-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'cancelAppointment'
+        ],
+        'get-available-slots' => [
+            'controller' => 'AppointmentController',
+            'action' => 'getAvailableSlots'
+        ],
+        'view-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'viewAppointment'
+        ],
+        'appointments-calendar' => [
+            'controller' => 'AppointmentController',
+            'action' => 'calendar'
+        ],
+        'confirm-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'confirmAppointment'
+        ],
+        'complete-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'completeAppointment'
+        ],
+        'reschedule-appointment' => [
+            'controller' => 'AppointmentController',
+            'action' => 'rescheduleAppointment'
         ]
     ];
 
