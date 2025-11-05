@@ -61,6 +61,34 @@ class Routing {
         'reschedule-appointment' => [
             'controller' => 'AppointmentController',
             'action' => 'rescheduleAppointment'
+        ],
+        'profile' => [
+            'controller' => 'PatientController',
+            'action' => 'profile'
+        ],
+        'edit-profile' => [
+            'controller' => 'PatientController',
+            'action' => 'editProfile'
+        ],
+        'medical-history' => [
+            'controller' => 'PatientController',
+            'action' => 'medicalHistory'
+        ],
+        'view-medical-record' => [
+            'controller' => 'PatientController',
+            'action' => 'viewMedicalRecord'
+        ],
+        'patients-list' => [
+            'controller' => 'PatientController',
+            'action' => 'listPatients'
+        ],
+        'view-patient' => [
+            'controller' => 'PatientController',
+            'action' => 'viewPatient'
+        ],
+        'create-patient' => [
+            'controller' => 'PatientController',
+            'action' => 'createPatient'
         ]
     ];
 
