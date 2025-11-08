@@ -89,6 +89,42 @@ class Routing {
         'create-patient' => [
             'controller' => 'PatientController',
             'action' => 'createPatient'
+        ],
+        'doctors-list' => [
+            'controller' => 'DoctorController',
+            'action' => 'listDoctors'
+        ],
+        'view-doctor' => [
+            'controller' => 'DoctorController',
+            'action' => 'viewDoctor'
+        ],
+        'create-doctor' => [
+            'controller' => 'DoctorController',
+            'action' => 'createDoctor'
+        ],
+        'edit-doctor' => [
+            'controller' => 'DoctorController',
+            'action' => 'editDoctor'
+        ],
+        'doctor-profile' => [
+            'controller' => 'DoctorController',
+            'action' => 'myProfile'
+        ],
+        'my-patients' => [
+            'controller' => 'DoctorController',
+            'action' => 'myPatients'
+        ],
+        'my-schedule' => [
+            'controller' => 'DoctorController',
+            'action' => 'mySchedule'
+        ],
+        'add-specialization' => [
+            'controller' => 'DoctorController',
+            'action' => 'addSpecialization'
+        ],
+        'remove-specialization' => [
+            'controller' => 'DoctorController',
+            'action' => 'removeSpecialization'
         ]
     ];
 
