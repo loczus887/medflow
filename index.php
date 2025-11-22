@@ -1,8 +1,10 @@
 <?php
 
 require_once 'src/services/SessionManager.php';
+require_once 'src/services/ErrorHandler.php';
 
 SessionManager::start();
+ErrorHandler::register();
 
 require_once 'Routing.php';
 
