@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Nie znaleziono | MedFlow</title>
+    <title>403 - Brak dostępu | MedFlow</title>
     <link rel="stylesheet" type="text/css" href="/public/styles/main.css">
     <style>
         body {
@@ -26,7 +26,7 @@
         .error-code {
             font-size: 120px;
             font-weight: 700;
-            color: #667eea;
+            color: #f44336;
             margin: 0;
             line-height: 1;
         }
@@ -77,14 +77,14 @@
 </head>
 <body>
     <div class="error-container">
-        <h1 class="error-code">404</h1>
-        <h2 class="error-title">Strona nie istnieje</h2>
+        <h1 class="error-code">403</h1>
+        <h2 class="error-title">Brak dostępu</h2>
         <p class="error-description">
-            Przepraszamy, ale strona której szukasz nie została znaleziona. 
-            Mogła zostać przeniesiona lub usunięta.
+            Nie masz uprawnień do wyświetlenia tej strony. 
+            Jeśli uważasz, że to pomyłka, skontaktuj się z administratorem systemu.
         </p>
         <div class="error-actions">
-            <a href="javascript:history.back()" class="btn btn-secondary">Wstecz</a>
+            <a href="/login" class="btn btn-secondary">Zaloguj się</a>
             <a href="/" class="btn btn-primary">Strona główna</a>
         </div>
     </div>
