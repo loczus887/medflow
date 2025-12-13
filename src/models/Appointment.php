@@ -12,22 +12,22 @@ class Appointment {
     private string $status;
     private ?string $reason;
     private ?string $notes;
-    private string $createdAt;
-    private string $updatedAt;
+    private ?string $createdAt;
+    private ?string $updatedAt;
     
     public function __construct(array $data) {
-        $this->id = (int)$data['id'];
+        $this->id = (int)($data['id'] ?? 0);
         $this->patientId = (int)$data['patient_id'];
         $this->doctorId = (int)$data['doctor_id'];
         $this->appointmentDate = $data['appointment_date'];
         $this->appointmentTime = $data['appointment_time'];
-        $this->duration = (int)$data['duration'];
-        $this->type = $data['type'];
-        $this->status = $data['status'];
+        $this->duration = (int)($data['duration'] ?? 30);
+        $this->type = $data['type'] ?? 'nfz';
+        $this->status = $data['status'] ?? 'scheduled';
         $this->reason = $data['reason'] ?? null;
         $this->notes = $data['notes'] ?? null;
-        $this->createdAt = $data['created_at'];
-        $this->updatedAt = $data['updated_at'];
+        $this->createdAt = $data['created_at'] ?? null;
+        $this->updatedAt = $data['updated_at'] ?? null;
     }
     
     public function getId(): int {
@@ -70,11 +70,15 @@ class Appointment {
         return $this->notes;
     }
     
-    public function getCreatedAt(): string {
+    public function getFullDate(): string {
+        return $this->appointmentDate . ' ' . $this->appointmentTime;
+    }
+    
+    public function getCreatedAt(): ?string {
         return $this->createdAt;
     }
     
-    public function getUpdatedAt(): string {
+    public function getUpdatedAt(): ?string {
         return $this->updatedAt;
     }
     

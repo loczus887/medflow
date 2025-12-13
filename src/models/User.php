@@ -7,8 +7,8 @@ class User {
     private string $password;
     private int $roleId;
     private string $status;
-    private string $createdAt;
-    private string $updatedAt;
+    private ?string $createdAt;
+    private ?string $updatedAt;
     private ?string $lastLogin;
     private ?string $roleName;
     
@@ -18,8 +18,8 @@ class User {
         $this->password = $data['password'];
         $this->roleId = (int)$data['role_id'];
         $this->status = $data['status'];
-        $this->createdAt = $data['created_at'];
-        $this->updatedAt = $data['updated_at'];
+        $this->createdAt = $data['created_at'] ?? null;
+        $this->updatedAt = $data['updated_at'] ?? null;
         $this->lastLogin = $data['last_login'] ?? null;
         $this->roleName = $data['role_name'] ?? null;
     }
@@ -44,11 +44,11 @@ class User {
         return $this->status;
     }
     
-    public function getCreatedAt(): string {
+    public function getCreatedAt(): ?string {
         return $this->createdAt;
     }
     
-    public function getUpdatedAt(): string {
+    public function getUpdatedAt(): ?string {
         return $this->updatedAt;
     }
     
@@ -84,6 +84,7 @@ class User {
         return [
             'id' => $this->id,
             'email' => $this->email,
+            'password' => $this->password,
             'role_id' => $this->roleId,
             'role_name' => $this->roleName,
             'status' => $this->status,
