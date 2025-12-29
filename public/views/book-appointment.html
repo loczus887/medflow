@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umów wizytę - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>MedFlow</h1>
+        </div>
+        <div class="navbar-menu">
+            <a href="/patient-dashboard">Dashboard</a>
+            <a href="/my-appointments">Moje wizyty</a>
+            <a href="/profile">Profil</a>
+            <a href="/logout" class="btn-logout">Wyloguj się</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Umów wizytę</h2>
+            <a href="/patient-dashboard" class="btn-secondary">Powrót</a>
+        </div>
+
+        <?php if(isset($message)): ?>
+            <div class="alert alert-<?= isset($error) ? 'error' : 'success' ?>">
+                <?= htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="card">
+            <form action="/book-appointment" method="POST" data-validate>
+                <div class="form-group">
+                    <label for="specialization">Specjalizacja (opcjonalnie)</label>
+                    <select name="specialization" id="specialization" class="form-control">
+                        <option value="">Wszystkie specjalizacje</option>
+                        <?php if(isset($specializations) && is_array($specializations)): ?>
+                            <?php foreach($specializations as $spec): ?>
+                                <option value="<?= $spec['id']; ?>">
+                                    <?= htmlspecialchars($spec['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="doctor_id">Wybierz lekarza *</label>
+                    <select name="doctor_id" id="doctor_id" required class="form-control">
+                        <option value="">Wybierz lekarza</option>
+                        <?php if(isset($doctors) && is_array($doctors)): ?>
+                            <?php foreach($doctors as $doctor): ?>
+                                <option value="<?= $doctor['id']; ?>">
+                                    <?= htmlspecialchars($doctor['title'] . ' ' . $doctor['first_name'] . ' ' . $doctor['last_name']); ?>
+                                    <?php if(isset($doctor['specializations']) && !empty($doctor['specializations'])): ?>
+                                        - <?= htmlspecialchars($doctor['specializations']); ?>
+                                    <?php endif; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Data wizyty *</label>
+                    <input type="date" name="date" id="date" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="time">Godzina wizyty *</label>
+                    <select name="time" id="time" required class="form-control">
+                        <option value="">Najpierw wybierz lekarza i datę</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Typ wizyty *</label>
+                    <select name="type" id="type" required class="form-control">
+                        <option value="nfz">NFZ</option>
+                        <option value="private">Prywatna</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Powód wizyty (opcjonalnie)</label>
+                    <textarea name="reason" id="reason" rows="4" class="form-control" 
+                              placeholder="Opisz pokrótce powód wizyty..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Umów wizytę</button>
+                    <a href="/patient-dashboard" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="public/scripts/api.js"></script>
+    <script src="public/scripts/appointments.js"></script>
+    <script src="public/scripts/forms.js"></script>
+    <script>
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+        
+        const specializationSelect = document.getElementById('specialization');
+        const doctorSelect = document.getElementById('doctor_id');
+        const allDoctors = Array.from(doctorSelect.options).slice(1); 
+        
+        if (specializationSelect) {
+            specializationSelect.addEventListener('change', function() {
+                const selectedSpec = this.value;
+                
+                doctorSelect.innerHTML = '<option value="">Wybierz lekarza</option>';
+                
+                allDoctors.forEach(option => {
+                    if (!selectedSpec || option.text.includes(selectedSpec)) {
+                        doctorSelect.appendChild(option.cloneNode(true));
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

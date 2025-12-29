@@ -92,8 +92,8 @@ class DashboardController extends AppController {
             $this->redirect('login');
         }
         
-        $todayAppointments = $this->appointmentService->getTodayAppointments($doctor['id']);
-        $upcomingAppointments = $this->appointmentRepository->getUpcomingAppointments($doctor['id']);
+        $todayAppointments = $this->appointmentRepository->getTodayAppointments($doctor['id']);
+        $upcomingAppointments = $this->appointmentRepository->getUpcomingAppointmentsByDoctor($doctor['id']);
         $stats = $this->appointmentRepository->getAppointmentStatsByDoctor($doctor['id']);
         
         $this->render('doctor-dashboard', [

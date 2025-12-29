@@ -200,4 +200,21 @@ class AppointmentRepository extends Repository {
         ";
         return $this->fetchOne($query, [':doctor_id' => $doctorId]) ?? [];
     }
+
+    public function getUpcomingAppointmentsByDoctor(int $doctorId): array {
+        $query = "
+            SELECT a.*,
+                p.first_name as patient_first_name,
+                p.last_name as patient_last_name,
+                p.pesel as patient_pesel
+            FROM appointments a
+            JOIN patients p ON a.patient_id = p.id
+            WHERE a.doctor_id = :doctor_id
+            AND a.appointment_date >= CURRENT_DATE
+            AND a.status IN ('scheduled', 'confirmed')
+            ORDER BY a.appointment_date, a.appointment_time
+        ";
+        return $this->fetchAll($query, [':doctor_id' => $doctorId]);
+    }
+
 }
