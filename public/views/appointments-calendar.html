@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalendarz wizyt - MedFlow</title>
+    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="public/styles/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <h1>MedFlow</h1>
+        </div>
+        <div class="navbar-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout" class="btn-logout">Wyloguj się</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Kalendarz wizyt</h2>
+            <a href="/dashboard" class="btn-secondary">Powrót</a>
+        </div>
+
+        <!-- Filtry -->
+        <div class="card">
+            <form method="GET" action="/appointments-calendar">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="start">Data od:</label>
+                        <input type="date" name="start" id="start" value="<?= $startDate ?? '' ?>" class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <label for="end">Data do:</label>
+                        <input type="date" name="end" id="end" value="<?= $endDate ?? '' ?>" class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <label for="doctor_id">Lekarz:</label>
+                        <select name="doctor_id" id="doctor_id" class="form-control">
+                            <option value="">Wszyscy lekarze</option>
+                            <?php if(isset($doctors)): ?>
+                                <?php foreach($doctors as $doctor): ?>
+                                    <option value="<?= $doctor['id'] ?>" <?= ($selectedDoctorId == $doctor['id']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($doctor['title'] . ' ' . $doctor['first_name'] . ' ' . $doctor['last_name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Filtruj</button>
+            </form>
+        </div>
+
+        <!-- Lista wizyt -->
+        <div class="appointments-section">
+            <h3>Wizyty <?= date('d.m.Y', strtotime($startDate)) ?> - <?= date('d.m.Y', strtotime($endDate)) ?></h3>
+            
+            <?php if (empty($appointments)): ?>
+                <p class="no-data">Brak wizyt w wybranym zakresie</p>
+            <?php else: ?>
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Godzina</th>
+                            <th>Lekarz</th>
+                            <th>Pacjent</th>
+                            <th>Typ</th>
+                            <th>Status</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($appointments as $appointment): ?>
+                            <tr>
+                                <td data-label="Data"><?= date('d.m.Y', strtotime($appointment['appointment_date'])) ?></td>
+                                <td data-label="Godzina"><?= date('H:i', strtotime($appointment['appointment_time'])) ?></td>
+                                <td data-label="Lekarz">
+                                    <?= htmlspecialchars($appointment['doctor_title'] . ' ' . $appointment['doctor_first_name'] . ' ' . $appointment['doctor_last_name']) ?>
+                                </td>
+                                <td data-label="Pacjent">
+                                    <?= htmlspecialchars($appointment['patient_first_name'] . ' ' . $appointment['patient_last_name']) ?>
+                                </td>
+                                <td data-label="Typ">
+                                    <span class="badge <?= $appointment['type'] == 'nfz' ? 'status-confirmed' : 'status-scheduled' ?>">
+                                        <?= $appointment['type'] == 'nfz' ? 'NFZ' : 'Prywatna' ?>
+                                    </span>
+                                </td>
+                                <td data-label="Status">
+                                    <span class="badge status-<?= $appointment['status'] ?>">
+                                        <?= $appointment['status'] ?>
+                                    </span>
+                                </td>
+                                <td data-label="Akcje">
+                                    <a href="/view-appointment?id=<?= $appointment['id'] ?>" class="btn btn-primary btn-sm">Szczegóły</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <style>
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 12px;
+        }
+        .row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .col-4 {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>

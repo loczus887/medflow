@@ -80,7 +80,7 @@ class AuthenticationIntegrationTest {
         assert(!isset($sessionData['password']), "Session should not contain password");
         
         //Session should contain safe data
-        assert(isset($sessionData['id']), "Session should contain user ID");
+        assert(isset($sessionData['user_id']), "Session should contain user ID");
         assert(isset($sessionData['email']), "Session should contain email");
         assert(isset($sessionData['role_id']), "Session should contain role_id");
         
