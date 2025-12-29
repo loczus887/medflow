@@ -69,7 +69,7 @@ System zarządzania przychodnią medyczną usprawniający pracę personelu medyc
 ##  Diagram ERD
 
 ### Diagram relacji bazy danych
-
+![ERD Diagram](docs/erd-diagram.png)
 https://drive.google.com/file/d/1_bj3aqBQgx50xFx-YGex3YELmuGB02e3/view?usp=sharing
 
 
@@ -426,7 +426,7 @@ Passed: 4
 Failed: 0
 ```
 
-## 📸 Screeny aplikacji
+## Screeny aplikacji
 
 ### 1. Strona logowania
 ![Login](docs/screenshots/login.png)
@@ -440,7 +440,8 @@ Failed: 0
 - Walidacja danych
 
 ### 3. Dashboard Pacjenta
-![Patient Dashboard](docs/screenshots/patient-dashboard.png)
+![Patient Dashboard](docs/screenshots/patient-dashboard1.png)
+![Patient Dashboard](docs/screenshots/patient-dashboard2.png)
 - Nadchodzące wizyty
 - Historia wizyt
 - Przycisk "Umów wizytę"
@@ -459,22 +460,15 @@ Failed: 0
 
 ### 6. Dashboard Recepcji
 ![Receptionist Dashboard](docs/screenshots/receptionist-dashboard.png)
+![Appointment's calender](docs/screenshots/appointments-calender.png)
 - Wizyty dzisiaj
 - Wizyty w tym tygodniu
 - Kalendarz
 
-### 7. Dashboard Administratora
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
-- Statystyki systemu
-- Zarządzanie lekarzami i pacjentami
-
-### 8. Strona błędu 404
+### 7. Strona błędu 404
 ![404 Error](docs/screenshots/404.png)
 
-### 9. Strona błędu 403
-![403 Error](docs/screenshots/403.png)
-
-### 10. Responsywność - Mobile
+### 8. Responsywność - Mobile
 ![Mobile View](docs/screenshots/mobile-responsive.png)
 
 ##  Checklista funkcjonalności
@@ -638,7 +632,7 @@ Failed: 0
 - [x] Hover effects
 - [x] Focus states
 
-## 📦 Struktura projektu
+## Struktura projektu
 
 ```
 medflow/
